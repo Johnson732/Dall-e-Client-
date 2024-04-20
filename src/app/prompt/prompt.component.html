@@ -1,0 +1,5 @@
+<input type="text" name="prompt" [(ngModel)]="prompt">
+<button (click)="getUrl()"[disabled]="!prompt">Proceed</button>
+<div *ngIf="imageSrc">
+  <img [src]="imageSrc">
+</div>
