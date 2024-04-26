@@ -1,5 +1,8 @@
 import { HttpRequestService } from './../http-request.service';
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
+import { initializeApp } from "firebase/app";
+import { getAnalytics ,logEvent} from "firebase/analytics";
 
 @Component({
   selector: 'app-prompt',
@@ -10,12 +13,28 @@ export class PromptComponent {
   prompt: string = '';
   imageSrc: string = '';
   messages:string[]=[];
-  constructor(private service: HttpRequestService) {}
+  analytics: any;
+  constructor(private service: HttpRequestService) {
+    const firebaseConfig ={
+      apiKey: environment.apiKey,
+      authDomain: environment.authDomain,
+      projectId: environment.projectId,
+      storageBucket: environment.storageBucket,
+      messagingSenderId: environment.messagingSenderId,
+      appId: environment.appId,
+      measurementId: environment.measurementId
+    };
+    const app = initializeApp(firebaseConfig);
+    this.analytics = getAnalytics(app);
+  }
   getUrl() {
     //console.log('get url');
     this.service.getData(this.prompt).subscribe((response: any) => {
       //console.log(response);
       this.imageSrc = response.data[0].url;
+      logEvent(this.analytics, 'dalle_called', {
+        prompt: this.prompt
+      });
       //console.log(this.imageSrc);
     });
   }
