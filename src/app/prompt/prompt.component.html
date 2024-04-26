@@ -1,5 +1,58 @@
-<input type="text" name="prompt" [(ngModel)]="prompt">
-<button (click)="getUrl()"[disabled]="!prompt">Proceed</button>
-<div *ngIf="imageSrc">
-  <img [src]="imageSrc">
+<div class="d-flex justify-content-center flex-column body" >
+
+  <div class="d-flex justify-content-center ">
+    <h1 class="source-serif-4">Dall-e + Gpt Image Gen</h1>
+  </div>
+
+  <div class="d-flex justify-content-center "*ngIf="!imageSrc">
+    <img class="single-image" src="/assets/eg.png">
+  </div>
+  <div class="d-flex justify-content-center" *ngIf="imageSrc">
+    <img [src]="imageSrc"class="single-image">
+  </div>
+
+  <div class="d-flex justify-content-center"style="margin: 1%;">
+    <div class=" input-group-lg"style="width: 50%;" >
+      <input type="text"class="form-control source-serif-4 " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="prompt" [(ngModel)]="prompt"placeholder="View the picture in your mind">
+    </div>
+    <button class="btn btn-outline-warning input source-serif-4"type="button" (click)="getChats()"[disabled]="!prompt">Get More</button>
+    <button class="btn btn-outline-success input source-serif-4"type="button" (click)="getUrl()"[disabled]="!prompt">Proceed</button>
+
+  </div>
+
+
+  <div class="d-flex justify-content-center flex-column" *ngIf="messages.length > 0">
+    <h1 style="margin: 2%;color: #ffffff;"class="source-serif-4 ">Select the best one or go with yours:</h1>
+    <ul style="margin: 2%;" class="source-serif-4 ">
+      <li *ngFor="let message of messages" (click)="selectMessage(message)">{{ message }}</li> <!-- Display each message in a list item -->
+    </ul>
+    <!-- <hr> -->
+    <!-- <ul>
+      <li style="color: rgb(255, 255, 255);">{{prompt}}</li>
+    </ul> -->
+  </div>
+  <!-- <div class="d-flex justify-content-center ">
+    <ul style="margin: 2%;" class="source-serif-4 ">
+      <li>1. An angelic figure with shimmering wings and a glowing halo </li>
+      <li>2. Wings spread wide, descending gracefully from the clouds</li>
+      <li>3. A heavenly being bathed in celestial light, casting a soft glow</li>
+      <li>4. Soft, billowing robes and a peaceful expression on the angel's face</li>
+      <li>5. Ethereal beauty and a sense of divine presence surrounding the angel</li>
+      <li>6. A sense of peace and tranquility radiating from the celestial being</li>
+      <li>7. A feeling of serenity and protection in the angel's presence</li>
+      <li>8. The gentle rustle of wings as the angel touches down on earth</li>
+      <li>9. A moment of pure magic and wonder as the angel descends</li>
+      <li>10. A vision of pure love and light as the angel descends from above</li>
+      <hr>
+      <h3>Your Prompt</h3>
+    <ul>
+      <li style="color: rgb(255, 255, 255);">{{prompt}}</li>
+    </ul>
+    </ul>
+
+  </div> -->
 </div>
+
+<!-- <div *ngIf="messages.length === 0">
+  <p>No messages available</p>
+</div> -->
